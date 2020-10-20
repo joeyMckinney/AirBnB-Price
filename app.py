@@ -23,7 +23,7 @@ def enable_cloud_notebook(port=8000):
 
 def create_app():
     """Create and configure an instance of the FastAPI application"""
-    app = FastAPI(()
+    app = FastAPI()
 
 
     @app.get('/')
