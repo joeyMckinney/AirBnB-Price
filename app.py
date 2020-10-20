@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 
 app = FastAPI(
-    title='Optimal AirBnB Pricing',
+    title='Optimal AirBnB Pricing API',
     docs_url='/'      #  Places docs at the root `/`
 )
 
