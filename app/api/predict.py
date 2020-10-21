@@ -12,25 +12,35 @@ router = APIRouter()
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    x1: float = Field(..., example=3.14)
-    x2: int = Field(..., example=-42)
-    x3: str = Field(..., example='banjo')
+    Description: str 
+    City: str 
+    Country: str 
+    Property_Type: str 
+    Room_Type: str
+    Accomodates: float
+    Bathrooms: float
+    Bedrooms: float
+    Beds: float
+    Amenities: str 
+    Price: float
+    Cancellation_Policy: str
+
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
         return pd.DataFrame([dict(self)])
 
-    @validator('x1')
-    def x1_must_be_positive(cls, value):
-        """Validate that x1 is a positive number."""
-        assert value > 0, f'x1 == {value}, must be > 0'
-        return value
+    # @validator('x1')
+    # def x1_must_be_positive(cls, value):
+    #     """Validate that x1 is a positive number."""
+    #     assert value > 0, f'x1 == {value}, must be > 0'
+    #     return value
 
 
 @router.post('/predict')
 async def predict(item: Item):
     """
-    Make random baseline predictions for classification problem 🔮
+    Making predictions for AirBnB rental prices using particular features🔮
 
     ### Request Body
     - `x1`: positive float
@@ -45,11 +55,6 @@ async def predict(item: Item):
     Replace the placeholder docstring and fake predictions with your own model.
     """
 
-    X_new = item.to_df()
-    log.info(X_new)
-    y_pred = random.choice([True, False])
-    y_pred_proba = random.random() / 2 + 0.5
-    return {
-        'prediction': y_pred,
-        'probability': y_pred_proba
-    }
+    # input will be a dictionary, (item :Item)
+    return '{}$ per night is an optimal AirBnB price.'.format(random.randrange(50, 550, 10))
+
