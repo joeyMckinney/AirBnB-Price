@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+Flask = "*"
+requests = "*"
+flask-sqlalchemy = "*"
+Quandl = "*"
+matplotlib = "*"
+pandas-datareader = "*"
+pandas = "*"
+beautifulsoup4 = "*"
+numpy = "*"
+scikit-learn = "*"
+fastapi = "*"
+uvicorn = "*"
+plotly = "*"
+sklearn = "*"
+joblib = "*"
+category-encoders = "*"
+starlette = "*"
+xgboost = "~=0.90"
+
+[requires]
+python_version = "3.8"

@@ -2,22 +2,25 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
+# from app.api import predict
 from app.api import predict, viz
+
 
 """Create and configure an instance of the FastAPI application"""
 app = FastAPI(
     title='Optimal AirBnB Pricing API',
-    description='An application that predicts the optimal pricing for an AirBnB',
+    description='Deploys a ____ regression model fit on the _____ dataset to make an optimal AirBnB price prediction.',
     version='0.1',
     docs_url='/'      #  Places docs at the root `/`
 )
 
 @app.get('/')
-def index():
-    return {'hello': 'world'}
+def Home():
+    return "{'hello': 'world'}"
 
 app.include_router(predict.router)
 app.include_router(viz.router)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,6 +31,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
+# classifier = load('api\mvp_model.joblib')
 
 
 def enable_cloud_notebook(port=8000):
@@ -44,6 +48,7 @@ def enable_cloud_notebook(port=8000):
     # Get a public URL to the localhost server 
     from pyngrok import ngrok
     print('Public URL:', ngrok.connect(port=port))
+
 
 
 if __name__ == '__main__':

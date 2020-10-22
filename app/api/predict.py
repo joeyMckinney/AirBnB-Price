@@ -1,29 +1,49 @@
 import logging
 import random
-
-from fastapi import APIRouter
+import pickle
+import joblib
+import numpy as np
 import pandas as pd
+
+from category_encoders import OneHotEncoder
+from sklearn import pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from xgboost.sklearn import XGBClassifier
+from fastapi import APIRouter
 from pydantic import BaseModel, Field, validator
 
 log = logging.getLogger(__name__)
 router = APIRouter()
 
+# classifier = load('api\mvp_model.joblib')
+
+# filename = 'api\mvp_model.joblib'
+# model = joblib.load(filename)
+
+# loaded = pickle.load(open(filename, 'rb'))
+# filepath = 'C:\Users\dabor\OneDrive\Desktop\mvp_model.pkl'
+# pickle_in = open(r'')
+
+
+
+filename = 'app/api/mvp_model.joblib'
+
+with open(filename, 'rb') as f:
+    joblib.load(f)
 
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    Description: str 
-    City: str 
-    Country: str 
-    Property_Type: str 
-    Room_Type: str
-    Accomodates: float
-    Bathrooms: float
-    Bedrooms: float
-    Beds: float
-    Amenities: str 
-    Price: float
-    Cancellation_Policy: str
+
+    Country: str = Field (...)
+    Property_Type: str = Field(...)
+    Room_Type: str = Field(...)
+    Accomodates: float = Field (...)
+    Bathrooms: float = Field (...)
+    Bedrooms: float = Field (...)
+    Beds: float = Field (...)
+    Cancellation_Policy: str = Field (...)
 
 
     def to_df(self):
@@ -38,14 +58,20 @@ class Item(BaseModel):
 
 
 @router.post('/predict')
-async def predict(item: Item):
+async def predict(Price: Item):
+    #(Price: float):
     """
     Making predictions for AirBnB rental prices using particular features🔮
 
     ### Request Body
-    - `x1`: positive float
-    - `x2`: integer
-    - `x3`: string
+  "Country": "string",
+  "Property_Type": "string",
+  "Room_Type": "string",
+  "Accomodates": 0,
+  "Bathrooms": 0,
+  "Bedrooms": 1,
+  "Beds": 0,
+  "Cancellation_Policy": "string"
 
     ### Response
     - `prediction`: boolean, at random
@@ -58,3 +84,4 @@ async def predict(item: Item):
     # input will be a dictionary, (item :Item)
     return '{}$ per night is an optimal AirBnB price.'.format(random.randrange(50, 550, 10))
 
+# f.close()
